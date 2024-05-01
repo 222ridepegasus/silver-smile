@@ -1,0 +1,172 @@
+---
+// You can import your assets and define states here
+// Importing the SVG logo might depend on how your project is set up.
+---
+
+<!-- Lightbox container hidden initially -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox(event)"></span>
+    <span class="lightbox-prev" onclick="changeImage(-1)"></span>
+    <img id="lightbox-img" src="">
+    <span class="lightbox-next" onclick="changeImage(1)"></span>
+</div>
+
+<style>
+/*************** GPT Lightbox ***************/ 
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top */
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.lightbox-close, .lightbox-prev, .lightbox-next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  z-index: 1500;
+}
+
+
+.lightbox-close {
+  top: 4px;
+  right: 4px;
+  background: url(/default-skin.png) 0 0 no-repeat;
+  background-size: 264px 88px;
+  background-position: 0 -44px;
+  height: 44px;
+  width: 44px;
+}
+
+.lightbox-prev {
+  left: 0;
+  background: url(/default-skin.png) 0 0 no-repeat;
+  background-size: 264px 88px;
+  background-position: -132px -36px;
+  height: 44px;
+  width: 44px;
+}
+
+.lightbox-next {
+  right: 0;
+  background: url(/default-skin.png) 0 0 no-repeat;
+  background-size: 264px 88px;
+  background-position: -88px -36px;
+  height: 44px;
+  width: 44px;
+}
+
+
+@media (max-width: 767px) {
+  .lightbox img {
+    max-width: 100%;
+    max-height: 86%;
+  }
+}
+
+</style>
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+        adjustGalleryImages();
+        setupLightbox();
+        });
+
+        function adjustGalleryImages() {
+        const galleryImages = document.querySelectorAll('.kg-gallery-image img');
+        galleryImages.forEach(img => {
+            if (img.complete) {  // Check if the image is already loaded
+            adjustImageFlex(img);
+            } else {
+            img.onload = () => adjustImageFlex(img);  // Set it to adjust once it loads
+            }
+        });
+        }
+
+        function adjustImageFlex(img) {
+        const aspectRatio = (img.naturalWidth / img.naturalHeight).toFixed(4);
+        img.parentNode.style.flex = `${aspectRatio} 1 0%`;  // Set flex basis based on the image aspect ratio
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const galleryImages = document.querySelectorAll('.kg-gallery-image img');
+        let currentImageIndex = 0;
+
+        galleryImages.forEach((img, index) => {
+            img.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent the backdrop click event
+                currentImageIndex = index;
+                openLightbox(img.src);
+            });
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        lightbox.addEventListener('click', closeLightbox);
+
+        document.querySelector('.lightbox-close').addEventListener('click', function(event) {
+            event.stopPropagation();
+            closeLightbox();
+        });
+
+        document.querySelector('.lightbox-prev').addEventListener('click', function(event) {
+            event.stopPropagation();
+            changeImage(-1);
+        });
+
+        document.querySelector('.lightbox-next').addEventListener('click', function(event) {
+            event.stopPropagation();
+            changeImage(1);
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeLightbox();
+            } else if (event.key === 'ArrowRight') {
+                changeImage(1);
+            } else if (event.key === 'ArrowLeft') {
+                changeImage(-1);
+            }
+        });
+
+        function openLightbox(src) {
+            lightbox.style.display = 'flex';
+            document.getElementById('lightbox-img').src = src;
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+
+        function changeImage(direction) {
+            currentImageIndex += direction;
+
+            if (currentImageIndex >= galleryImages.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = galleryImages.length - 1;
+            }
+
+            const newImgSrc = galleryImages[currentImageIndex].src;
+            openLightbox(newImgSrc);
+        }
+    });
+
+
+            
+</script>

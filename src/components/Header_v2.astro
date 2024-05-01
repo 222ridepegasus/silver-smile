@@ -1,0 +1,51 @@
+---
+// Your Astro component script
+const logoSVG = '/logo_kierankelly.svg'; // Change this to your actual logo path
+---
+
+
+<header id="gh-head" class="gh-head outer"> 
+  <div class="gh-head-inner inner"><!-- grid is used -->
+
+        <div class="gh-head-brand"> <!-- flex is used -->
+            <a href="/" class="header-logo">
+                <img src={logoSVG} alt="Logo" />
+            </a>
+            <button class="gh-burger" aria-label="Main Menu"></button>
+        </div>
+
+        <nav class="gh-head-menu"> <!-- flex is used -->
+            <ul class="nav">
+                <li class="nav-home" style="transition-delay: 0.03s;"><a href="/">Home</a></li>
+                <li class="nav-about" style="transition-delay: 0.06s;"><a href="/about">About</a></li>
+                <li class="nav-portfolio" style="transition-delay: 0.09s;"><a href="/about">Portfolio</a></li>
+            </ul>
+        </nav>
+
+        
+        
+  </div>
+</header>
+
+
+<style is:global>
+  
+</style>
+
+<script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const burgerButton = document.querySelector('.gh-burger');
+      const closeButton = document.querySelector('.close-menu');
+      const body = document.body;  // This targets the <body> element to toggle the class
+  
+      burgerButton.addEventListener('click', () => {
+        body.classList.toggle('gh-head-open');  // This toggles the class on and off
+      });
+  
+      closeButton.addEventListener('click', () => {
+        body.classList.remove('gh-head-open');  // This ensures the class is removed when the menu is closed
+      });
+    });
+  </script>
+
+  

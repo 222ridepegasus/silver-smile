@@ -1,0 +1,629 @@
+/* Table of Contents
+/* ------------------------------------------------------------
+
+This is a development CSS file which is built to a minified
+production stylesheet in assets/built/screen.css
+
+1.  Global Styles
+2.  Layout
+3.  Site Header
+4.  Site Navigation
+5.  Post Feed
+6.  Single Post
+  6.1. Post Byline
+  6.2. Subscribe
+  6.3. Read More
+  6.4. Comments
+7.  Author Template
+8.  Tag Template
+9.  Error Template
+10.  Site Footer
+11. Dark Mode
+12. Lightbox
+
+*/
+
+/* 1. Global - Set up the things
+/* ---------------------------------------------------------- */
+
+/* Import CSS reset and base styles */
+@import "global.css";
+
+:root {
+
+    /* Colours */
+    --color-green: #a4d037;
+    --color-yellow: #fecd35;
+    --color-red: #f05230;
+    --color-darkgrey: #15171A;
+    --color-midgrey: #738a94;
+    --color-lightgrey: #f1f1f1;
+    --color-secondary-text: #979797;
+    --color-border: #e1e1e1;
+    --color-wash: #e5eff5;
+    --color-darkmode: #151719;
+
+    /*
+    An accent color is also set by Ghost itself in
+    Ghost Admin > Settings > Brand */
+
+    --ghost-accent-color: #0D1915;
+
+    /*
+    You can use this variable throughout your styles
+     */
+
+    /* Fonts */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    --font-serif: Georgia, Times, serif;
+    --font-mono: Menlo, Courier, monospace;
+
+}
+
+
+/* 2. Layout - Page building blocks
+/* ---------------------------------------------------------- */
+
+
+html {
+  background-color: var(--ghost-accent-color);
+}
+
+.viewport {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-content {
+  flex-grow: 1;
+}
+
+/* Full width page blocks */
+.outer {
+  position: relative;
+  padding: 0 max(4vmin, 20px);
+}
+
+/* Centered content container blocks */
+.inner {
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* 3. Site Header
+/* ---------------------------------------------------------- */
+
+
+.gh-head { /* 269 */
+  background-color: #fff;
+  font-size: 1.6rem;
+  height: 88px;
+  line-height: 1.3em;
+  z-index: 150;
+}
+
+.gh-head { /* 274 */
+  background-color: var(--ghost-accent-color);
+  color: #fff;
+}
+
+.gh-head a { /* 289 */
+  text-decoration: none;
+}
+
+.gh-head-inner, .is-head-left-logo .gh-head-inner { /* 295 */ /* REMOVE CLASS? */
+  grid-template-columns: auto 1fr auto;
+}
+
+.gh-head-inner { /* 297 */
+  align-items: center;
+  -moz-column-gap: 40px;
+  /* column-gap: 40px; */
+  display: grid;
+  grid-auto-flow: row dense;
+  height: 100%;
+}
+
+@media (min-width: 992px) { /* 319 */
+  .is-head-left-logo .gh-head-menu {
+      margin-left: 16px;
+      /* margin-right: 64px; */
+  }
+}
+
+.gh-head-brand { /* 402 */
+  align-items: center;
+  display: flex;
+  height: 40px;
+  word-break: break-all;
+}
+
+.is-head-left-logo .gh-head-logo { /* 421 */ /* REMOVE CLASS? */
+  color: #fff;
+}
+
+.gh-head-logo img { /* 425 */
+  max-height: 40px;
+}
+
+.gh-head-menu { /* 434 */
+  align-items: center;
+  display: flex;
+  font-weight: 500;
+  margin-top: 1px;
+  flex-direction: row-reverse;
+}
+
+.gh-head-menu .nav { /* 441 */
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gh-head-menu .nav li { /* 450 */
+  margin: 0;
+  padding: 0;
+}
+
+.gh-head-menu .nav a { /* 457 */
+  color: inherit;
+  display: inline-block;
+  line-height: 1.7;
+}
+
+.gh-head-menu .nav .nav-portfolio a {
+  color: #979797;
+}
+
+
+.gh-burger { /* 664 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  display: none;
+  height: 30px;
+  margin-right: -3px;
+  padding: 0;
+  position: relative;
+  width: 30px;
+}
+
+.gh-burger:after, .gh-burger:before { /* 674 */
+  background-color: var(--color-darkgrey);
+  content: "";
+  height: 1px;
+  left: 3px;
+  position: absolute;
+  transition: all .2s cubic-bezier(.04,.04,.12,.96) .1008s;
+  width: 24px;
+}
+
+.gh-burger:after, .gh-burger:before { /* 680 */
+  background-color: #fff;
+}
+
+.gh-burger:before { /* 684 */
+  top: 11px;
+}
+
+.gh-burger:after { /* 688 */
+  bottom: 11px;
+}
+
+.gh-head-open .gh-burger:before { /* 692 */
+  top: 15px;
+  transform: rotate(45deg);
+}
+
+.gh-head-open .gh-burger:after { /* 697 */
+  bottom: 14px;
+  transform: rotate(-45deg);
+}
+
+
+/****/
+
+@media (max-width: 767px) { /* 708 */
+  #gh-head {
+      height: 64px;
+  }
+
+  #gh-head .gh-head-inner { /* 714 */
+    gap: 48px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  #gh-head .gh-head-brand { /* 721 */
+    align-items: center;
+    display: grid;
+    grid-column-start: 1;
+    grid-template-columns: 1fr auto auto;
+    height: 64px;
+  }
+  
+  #gh-head .gh-head-logo { /* 726 */
+    font-size: 2.2rem;
+  }
+
+  #gh-head .gh-burger { /* 734 */
+    display: block;
+  }
+
+  #gh-head .gh-head-menu { /* 740 */
+    justify-content: center;
+    opacity: 0;
+    position: fixed;
+    visibility: hidden;
+  }
+
+  #gh-head .gh-head-menu { /* 746 */
+    margin: 0;
+    transform: translateY(0);
+    transition: none;
+  }
+
+  #gh-head .nav { /* 753 */
+    align-items: center;
+    gap: 16px;
+    line-height: 1.4;
+  }
+
+  #gh-head .nav a { /* 758 */
+    opacity: 0;
+    font-size: 2.6rem;
+    font-weight: 600;
+    text-transform: none;
+  }
+
+  #gh-head .nav li { /* 764 */
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  
+  .gh-head-open #gh-head { /* 787 */
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+    inset: 0;
+    overflow-y: scroll;
+    position: fixed;
+    z-index: 3999999;
+  }
+
+  .gh-head-open.has-cover #gh-head { /* 792 */
+    background-color: var(--ghost-accent-color);
+  }
+
+  .gh-head-open #gh-head .gh-head-menu { /* 799 */
+    opacity: 1;
+    position: static;
+    visibility: visible;
+  }
+
+  .gh-head-open #gh-head .nav { /* 803 */
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* GPT added code for animation */
+
+.gh-head-menu .nav a,
+.gh-head-menu .nav li {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@media (max-width: 767px) {
+    #gh-head .nav a,
+    #gh-head .nav li {
+        opacity: 0;
+        /* transform: translateY(-2px); */
+    }
+
+    .gh-head-open #gh-head .nav a,
+    .gh-head-open #gh-head .nav li {
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* Post Feed
+/* ---------------------------------------------------------- */
+
+.post-card-tags { /* 950 */ 
+  align-items: center;
+  color: var(--color-secondary-text);
+  display: flex;
+  font-size: 1.4rem;
+  font-weight: 600;
+  gap: 12px;
+  letter-spacing: -.005em;
+  line-height: 1;
+  margin: 0 0 10px;
+}
+
+.author-profile-image { /* 1066 */
+  background: #fff;
+  border-radius: 100%;
+  display: block;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100%;
+}
+
+.author-list { /* 1073 */
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 0 0 4px;
+  padding: 0;
+}
+
+.author-list-item { /* 1082 */
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* --- */
+
+.article { /* 1222 */
+  word-break: break-word;
+}
+
+.post-template .article { /* 1226 */
+  padding: max(8vmin, 40px) 0 max(8vmin, 64px);
+}
+
+.post-template .article-header { /* 1230 */ 
+  padding: 0 0 max(6.4vmin, 40px);
+}
+
+.article-tag { /* 1239 */ 
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+}         
+
+.article-tag a { /* 1243 */ 
+  color: var(--color-secondary-text);
+}
+
+.article-title { /* 1251 */ 
+  color: var(--color-darkgrey);
+  font-size: clamp(3.2rem,5vw,5.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  margin-bottom: 0;
+}
+
+.gh-canvas .article-image { /* 1267 */ 
+  grid-column: wide-start / wide-end;
+  margin: max(6.4vmin, 40px) 0 0;
+  width: 100%;
+}
+
+.gh-canvas .article-image img { /* 1281 */ 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* 1305 */ /* was edited slightly */
+.gh-canvas,
+.kg-width-full .kg-content-wide {
+    --gap: max(4vmin, 20px);
+    --main: min(var(--content-width, 720px), 100% - var(--gap) * 2);
+    --wide: minmax(0, calc((var(--container-width, 1200px) - var(--content-width, 720px)) / 2));
+    --full: minmax(var(--gap), 1fr);
+
+    display: grid;
+    grid-template-columns:
+        [full-start] var(--full)
+        [wide-start] var(--wide)
+        [main-start] var(--main) [main-end]
+        var(--wide) [wide-end]
+        var(--full) [full-end];
+}
+
+/* 1320 */ 
+.gh-canvas>* { 
+  grid-column: main-start / main-end;
+}
+
+/* 1325 */
+.kg-content-wide>div, .kg-width-wide {
+  grid-column: wide-start / wide-end;
+}
+
+/* 1329 */
+.kg-width-full { 
+  grid-column: full-start / full-end;
+}
+
+/* 1333 */
+.kg-width-full img {
+  width: 100%;
+}
+
+/* 1347 */ 
+.gh-content>*+* { 
+  margin-bottom: 0;
+  margin-top: max(3.2vmin, 24px);
+}
+
+/* 1380 */
+.gh-content>blockquote, .gh-content>hr {  
+  margin-top: max(4.8vmin, 32px);
+  position: relative;
+}
+
+/* 1384 */
+.gh-content>blockquote+*, .gh-content>hr+* { 
+  margin-top: max(4.8vmin, 32px) !important;
+}
+
+/* 1399 */ 
+.gh-content>blockquote:not([class]), .gh-content>dl, .gh-content>ol, .gh-content>p, .gh-content>ul { 
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.6em;
+}
+
+.gh-content>blockquote:not([class]) { /* 1467 */
+  font-style: italic;
+  padding: 0;
+  position: relative;
+}
+
+.gh-content>blockquote:not([class]):before { /* 1478 */
+  background: var(--ghost-accent-color);
+  bottom: 0;
+  content: "";
+  left: -1.5em;
+  position: absolute;
+  top: 0;
+  width: .3rem;
+}
+
+/* 1522 */
+@media (max-width: 650px) {
+  .gh-content .kg-callout-card .kg-callout-text, .gh-content .kg-toggle-card .kg-toggle-content>ol, .gh-content .kg-toggle-card .kg-toggle-content>p, .gh-content .kg-toggle-card .kg-toggle-content>ul, .gh-content>blockquote:not([class]), .gh-content>dl, .gh-content>ol, .gh-content>p, .gh-content>ul {
+      font-size: 1.8rem;
+  }
+}
+
+/* 1551 */
+.gh-content .kg-card+:not(.kg-card), .gh-content :not(.kg-card):not([id])+.kg-card {
+  margin-top: 6vmin;
+}
+
+
+
+ /* 1569 */
+.kg-gallery-image, .kg-image[width][height] {
+  cursor: pointer;
+}
+
+figcaption { /* 1606 */
+  color: rgba(0, 0, 0, .5);
+  font-size: 1.3rem;
+  line-height: 1.4em;
+  padding: 1.5rem 1.5rem 0;
+  text-align: center;
+}
+
+.article-byline { /* 1728 */ 
+  display: flex;
+  justify-content: space-between;
+  margin: min(24px, 5.6vmin) 0 0;
+}
+
+.article-byline-content { /* 1736 */ 
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+}
+
+.article-byline-content .author-list { /* 1740 */ 
+  justify-content: flex-start;
+  padding: 0 14px 0 0;
+}
+
+.article-byline-meta { /* 1745 */ 
+  color: var(--color-secondary-text);
+  font-size: 1.4rem;
+  line-height: 1.2em;
+}
+
+.article-byline-meta .author-name { /* 1752 */ 
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 0 0 6px;
+}
+
+/* kk added */ 
+.author-name span {
+  color: #15171a;
+}
+
+.article-byline-meta .bull { /* 1758 */ 
+  display: inline-block;
+  margin: 0 2px;
+}
+
+.author-avatar { /* 1770 */ 
+  background-color: var(--color-border);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: block;
+  height: min(56px, 13.6vmin);
+  margin: 0 -4px;
+  overflow: hidden;
+  width: min(56px, 13.6vmin);
+}
+
+/* 1779 */
+@media (max-width: 767px) {
+  .article-byline-content .author-list {
+      padding-right: 12px;
+  }
+}
+
+/* Footer
+/* ---------------------------------------------------------- */
+
+/* 2066 */ 
+.site-footer .inner {
+  grid-gap: 40px;
+  color: hsla(0, 0%, 100%, .7);
+  display: grid;
+  font-size: 1.3rem;
+  grid-template-columns: auto 1fr auto;
+}
+
+/* 2079 */ 
+.site-footer a {
+  color: hsla(0, 0%, 100%, .7);
+}
+
+/* 2083 */ 
+.site-footer a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* 2507 */ 
+.site-footer {
+  background-color: var(--ghost-accent-color);
+  color: #fff;
+  margin: max(12vmin, 64px) 0 0;
+  padding-bottom: 140px;
+  padding-top: 48px;
+  position: relative;
+}
+
+/* 2703 */ 
+.site-footer .copyright a {
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: -.015em;
+}
+
+
+
+
