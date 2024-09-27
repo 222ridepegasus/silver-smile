@@ -1,0 +1,29 @@
+---
+// about.astro
+import Layout from '../layouts/Layout.astro';
+
+// Properties for the about page
+const title = "About";
+const bodyClass = "page-template";
+const includeFooter = true;  // Assuming you want the footer here
+const includeLightbox = false;
+const includeCardsCss = false;  // No need for cards.css on the About page
+---
+
+<Layout title={title} bodyClass={bodyClass} includeFooter={includeFooter} includeLightbox={includeLightbox} includeCardsCss={includeCardsCss}>
+    
+    <div class="site-content">
+        <main id="site-main" class="site-main">
+            <article class="article post featured no-image">
+                <header class="article-header gh-canvas">
+                    <h1 class="article-title">About this site</h1>
+                </header>
+        
+                <section class="gh-content gh-canvas">
+                    <p>Rose Eagle is an independent publication launched in April 2024 by Kieran Kelly. If you subscribe today, you'll get full access to the website as well as email newsletters about new content when it's available. Your subscription makes this site possible, and allows Rose Eagle to continue to exist. Thank you!</p><h3 id="access-all-areas">Access all areas</h3><p>By signing up, you'll get access to the full archive of everything that's been published before and everything that's still to come. Your very own private library.</p><h3 id="fresh-content-delivered">Fresh content, delivered</h3><p>Stay up to date with new content sent straight to your inbox! No more worrying about whether you missed something because of a pesky algorithm or news feed.</p><h3 id="meet-people-like-you">Meet people like you</h3><p>Join a community of other subscribers who share the same interests.</p><hr><h3 id="start-your-own-thing">Start your own thing</h3><p>Enjoying the experience? Get started for free and set up your very own subscription business using <a href="https://ghost.org/?ref=localhost">Ghost</a>, the same platform that powers this website.</p>
+                </section>
+            </article>
+        </main>
+    </div>
+
+</Layout>

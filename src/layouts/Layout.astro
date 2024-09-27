@@ -1,13 +1,19 @@
 ---
+// Define the interface for the props this layout will accept
 interface Props {
     title: string;
+    includeFooter?: boolean;
+    includeLightbox?: boolean;
+    includeCardsCss?: boolean;  // New prop for including cards.css
+    bodyClass?: string;
 }
 
 import Header_v2 from '../components/Header_v2.astro';
 import Lightbox from '../components/Lightbox.astro';
 import Footer from '../components/Footer.astro';
 
-const { title } = Astro.props;
+// Extract props with default values
+const { title, includeFooter = true, includeLightbox = true, includeCardsCss = true, bodyClass = '' } = Astro.props as Props;
 ---
 
 <!doctype html>
@@ -21,15 +27,14 @@ const { title } = Astro.props;
         <title>{title}</title>
         <link rel="stylesheet" href="/css/global.css" />
         <link rel="stylesheet" href="/css/screen.css" />
-        <link rel="stylesheet" href="/css/cards.css" />
+        {includeCardsCss && <link rel="stylesheet" href="/css/cards.css" />}
     </head>
-    <body class="post-template is-head-left-logo">
-        <div class="viewport">  <!-- Here is the viewport wrapper -->
+    <body class={bodyClass}>
+        <div class="viewport">
             <Header_v2 />
             <slot />
-            <Footer />
-        </div> <!-- ends the viewport wrapper -->
-			
-		<Lightbox />
+            {includeFooter && <Footer />}
+        </div>
+        {includeLightbox && <Lightbox />}
     </body>
 </html>

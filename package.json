@@ -12,6 +12,8 @@
   "dependencies": {
     "@tryghost/content-api": "^1.11.20",
     "astro": "^4.6.2",
+    "axios": "^1.7.7",
+    "fs-extra": "^11.2.0",
     "node-fetch": "^3.3.2"
   }
 }

@@ -6,14 +6,12 @@ export async function getStaticPaths() {
     try {
         const posts = await ghostClient.posts.browse({
             limit: 'all',
-            include: 'tags,authors'  // Including tags and authors to see all related data
+            include: 'tags,authors',
         });
-        
-        console.log(posts);  // Logging the posts to see the data structure
 
         return posts.map(post => ({
             params: { slug: post.slug },
-            props: { post }
+            props: { post },
         }));
     } catch (err) {
         console.error(err);
@@ -22,10 +20,21 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const bodyClass = 'post-template';
+
+// Utility function to extract the filename from the Ghost URL
+function getFilenameFromUrl(url) {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1];
+}
+
+// Replace Ghost image URLs in post content with Silver Smile local paths
+function replaceGhostImageUrls(html) {
+    return html.replace(/http:\/\/(localhost|127\.0\.0\.1):2369\/content\/images\/([^\s"']+)/g, '/images/$2');
+}
 ---
 
-<Layout title={post.title}>
-
+<Layout title={post.title} bodyClass={bodyClass}>
     <div class="site-content">
         <article class="article post">
             <div class="article-header gh-canvas">
@@ -44,15 +53,13 @@ const { post } = Astro.props;
                             </ul>
                             <div class="article-byline-meta">
                                 <h4 class="author-name">
-                                    <span> {/* This link will go nowhere */}
-                                        {post.primary_author.name}
-                                    </span>
+                                    <span>{post.primary_author.name}</span>
                                 </h4>
                                 <time class="byline-meta-date" datetime={post.published_at}>
                                     {new Date(post.published_at).toLocaleDateString('en-US', {
-                                        month: 'short', // "short" for abbreviated month name.
-                                        day: '2-digit',  // "2-digit" to ensure the day is always two digits.
-                                        year: 'numeric' // "numeric" to display the full year.
+                                        month: 'short',
+                                        day: '2-digit',
+                                        year: 'numeric'
                                     })}
                                 </time>
                                 <span class="byline-reading-time">
@@ -64,23 +71,14 @@ const { post } = Astro.props;
                     )}
                 </div>
                 <figure class="article-image">
-                    <img src={post.feature_image} alt={post.title} />
-                    <!-- <figcaption><span style="white-space: pre-wrap;"></span></figcaption> -->
+                    <img src={`/images/2024/04/${getFilenameFromUrl(post.feature_image)}`} alt={post.title} />
                 </figure>
-            </div> <!-- This is the closing tag for <div class="article-header gh-canvas"> -->
-    
+            </div>
 
-    
             <section class="gh-content gh-canvas">
-                <Fragment set:html={post.html} />
+                <!-- Replace Ghost image URLs within the post content -->
+                <Fragment set:html={replaceGhostImageUrls(post.html)} />
             </section>
         </article>
     </div>
-    
-
 </Layout>
-
-
-<style is:global>
-
-</style>

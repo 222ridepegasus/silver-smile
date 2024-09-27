@@ -1,0 +1,103 @@
+---
+// about.astro
+import Layout from '../layouts/Layout.astro';
+
+// Properties for the about page
+const title = "Portfolio";
+const bodyClass = "";
+const includeFooter = false;  // Assuming you want the footer here
+const includeLightbox = false;
+const includeCardsCss = false;  // No need for cards.css on the About page
+---
+
+<Layout title={title} bodyClass={bodyClass} includeFooter={includeFooter} includeLightbox={includeLightbox} includeCardsCss={includeCardsCss}>
+    <div class="content-wrap">
+        <div class="outer-container">
+            <div class="container"></div>
+        </div>
+    </div>
+    
+</Layout>
+
+<style is:global>
+
+    .content-wrap {
+        background-color: var(--ghost-accent-color);
+        font-family: monospace;
+        display: flex;         /* Enables flexbox */
+        justify-content: left; /* Centers content horizontally */
+        align-items: center;   /* Centers content vertically */
+        height: 100vh;         /* Makes the div fill the entire height of the viewport */
+        width: 100vw;          /* Makes the div fill the entire width of the viewport */
+        margin: 0;             /* Removes default margin */
+        padding: 0;            /* Removes default padding */
+        padding-bottom: 20%;
+    }
+
+    .container {
+        color:#CF2C67;
+        line-height: 1.7;
+        padding: 2em;
+        position: relative;
+        white-space: pre-wrap;
+        font-size: 18px; /* Add this line to increase the font size */
+    }
+  
+    .container::after {
+        background-color: #CF2C67;
+        content: "";
+        display: inline-block;
+        height: 1em;
+        margin-left: 0.1em;
+        opacity: 1;
+        vertical-align: text-bottom;
+        width: 0.8em;
+        animation: blink 0.8s infinite;
+    }
+    
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+
+
+</style>
+
+<script>
+    const text = `››Hyperdyne Systems SYNFONICA
+››Trademark and Copyright 2023, All Rights Reserved
+››Bootloader v1.b.5 by K KELLY
+Basic Motor Functions.........OK
+Basic Cognitive.........OK
+Basic Thinking.........OK
+Higher Thinking.........OK
+Fine Motor.........OK
+ISIS.........OK
+OSIRIS.........OK
+SET.........OK
+RA.........SUNRISE
+››SYFONICA Online`;
+
+const container = document.querySelector('.container');
+
+let index = 0;
+
+function type() {
+  if (index < text.length) {
+    if (text[index] === '\n') {
+      container.innerHTML += '<br>';
+    } else {
+      container.innerHTML += text[index];
+    }
+    index++;
+    setTimeout(type, 50);
+  }
+}
+
+type();
+
+
+
+</script>

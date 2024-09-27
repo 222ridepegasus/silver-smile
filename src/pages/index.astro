@@ -1,6 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { ghostClient } from '../lib/ghost';
+
+// Helper function to truncate words
+function truncate(str, numWords) {
+    return str.split(' ').slice(0, numWords).join(' ') + (str.split(' ').length > numWords ? '...' : '');
+}
+
 const posts = await ghostClient.posts
     .browse({
         limit: 'all',
@@ -8,13 +14,62 @@ const posts = await ghostClient.posts
     .catch((err) => {
         console.error(err);
     });
+
+// Helper function to assign classes based on post index
+function getPostClass(index) {
+    if (index === 0) return 'post-card post-card-large'; // First post is large
+    if (index === 1 || index === 2) return 'post-card post dynamic'; // Next two are dynamic
+    return 'post-card post'; // Default for the rest
+}
+
+// Utility function to extract the filename from the Ghost URL
+function getFilenameFromUrl(url) {
+    const urlParts = url.split('/');
+    return urlParts[urlParts.length - 1];
+}
+
+const bodyClass = "home-template";
 ---
-<Layout title='Kierankelly.net'>
-	{
-		posts.map((post) => (
-			<a href={`/post/${post.slug}`}>
-				<h1> {post.title} </h1>
-			</a>
-		))
-	}
+
+<Layout title='Kierankelly.net' bodyClass={bodyClass}>
+    <div class="site-content">
+        <main id="site-main" class="site-main outer">
+            <div class="inner posts">
+                <div class="post-feed">
+                    {
+                        posts.map((post, index) => (
+                            <article class={getPostClass(index)} key={post.id}>
+                                <a class="post-card-image-link" href={`/post/${post.slug}`}>
+                                    <!-- Update the image path to use the local Silver Smile /public/images directory -->
+                                    <img class="post-card-image" src={`/images/2024/04/${getFilenameFromUrl(post.feature_image)}`} alt={post.title} />
+                                </a>
+                                <div class="post-card-content">
+                                    <a class="post-card-content-link" href={`/post/${post.slug}`}>
+                                        <header class="post-card-header">
+                                            <h2 class="post-card-title">{post.title}</h2>
+                                        </header>
+                                        <section class="post-card-excerpt">
+                                            <p>{truncate(post.excerpt, 20)}</p>
+                                        </section>
+                                    </a>
+                                    <footer class="post-card-meta">
+                                        <div class="post-card-meta-info">
+                                            <time datetime={post.published_at}>
+                                                {new Date(post.published_at).toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric'
+                                                })}
+                                            </time>
+                                            <span class="post-card-reading-time"> · {post.reading_time} min read</span>
+                                        </div>
+                                    </footer>
+                                </div>
+                            </article>
+                        ))
+                    }
+                </div>
+            </div>
+        </main>
+    </div>
 </Layout>
